@@ -118,7 +118,7 @@
 							input.change();
 						}
 						// on blur incomplete numbers are invalid
-						if (settings.invalid && input.data('status') == 'incomplete') {
+						if (settings.invalid && input.val().length !== 0 && input.data('status') == 'incomplete') {
 							input.data('status', 'invalid');
 							settings.invalid.call(input);
 						}
