@@ -85,11 +85,9 @@
 							newText = val.replace(reg, rule.replace);
 							
 							input.val(newText);
-
-							
 						}
 						prevText = input.val();
-						
+						input.data('status', rule.complete ? 'complete' : 'incomplete');
 						if (rule.complete && settings.complete) {
 							settings.complete.call(input);
 						} else if (settings.incomplete) {
@@ -100,6 +98,7 @@
 						if (settings.invalid) {
 							settings.invalid.call(input);
 						}
+						input.data('status', 'invalid');
 						input.val(prevText);
 					}
 					return input.val().length;
@@ -117,6 +116,11 @@
 						checkVal();
 						if (input.val() !== focusText) {
 							input.change();
+						}
+						// on blur incomplete numbers are invalid
+						if (settings.invalid && input.data('status') == 'incomplete') {
+							input.data('status', 'invalid');
+							settings.invalid.call(input);
 						}
 					})
 					.bind("keyup.autoreplace", keyup)
