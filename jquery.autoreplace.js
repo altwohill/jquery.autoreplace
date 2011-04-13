@@ -63,7 +63,7 @@
 
 				function keyup(e) {
 					checkVal();
-				};
+				}
 				function checkVal() {
 					// Loop through the rules array looking for a match
 					var x = 0;
@@ -103,25 +103,27 @@
 						input.val(prevText);
 					}
 					return input.val().length;
-				};
-				if (!input.attr("readonly"))
+				}
+				if (!input.attr("readonly")) {
 					input
 					.one("unautoreplace", function() {
 						input
-							.unbind(".autoreplace")
+							.unbind(".autoreplace");
 					})
 					.bind("focus.autoreplace", function() {
 						focusText = input.val();
 					})
 					.bind("blur.autoreplace", function() {
 						checkVal();
-						if (input.val() != focusText)
+						if (input.val() !== focusText) {
 							input.change();
+						}
 					})
 					.bind("keyup.autoreplace", keyup)
 					.bind(pasteEventName, function() {
 						setTimeout(function() { checkVal(); }, 0);
 					});
+				}
 			});
 		}
 	});
